@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
+    ></script>
+    <style>
+      :root {
+        --primary: #ddd;
+        --dark: #333;
+        --light: #fff;
+        --shadow: 0 1px 5px rgba(104 104 104 0.8);
+      }
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+        font-family: "Bree Serif", "serif";
+      }
+      body {
+        padding: 10px;
+        background-color: #ccc;
+      }
+      .wrapper {
+        margin: 100px auto;
+        max-width: 1100px;
+      }
+      .wrapper nav {
+        display: flex;
+        justify-content: center;
+      }
+      .items {
+        display: flex;
+        max-width: 1030px;
+        width: 100%;
+        justify-content: space-between;
+      }
+      .item {
+        padding: 7px 25px;
+        font-size: 38px;
+        font-weight: 500;
+        background: var(--primary);
+        color: var(--dark);
+        border-radius: 9px;
+
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .items .active,
+      .item:hover {
+        background-color: var(--dark);
+        color: var(--light);
+      }
+      .gallery {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        margin-top: 20px;
+      }
+
+      .image {
+        padding: 7px;
+        width: calc(100% / 1);
+      }
+      .image.hide {
+        display: none;
+      }
+      .image.show {
+        animation: animate 0.4s ease;
+      }
+      @keyframes animate {
+        0% {
+          transform: scale(0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .image span {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+      }
+      img:hover {
+        transform: scale(1.1);
+      }
+      img {
+        width: 100%;
+        vertical-align: middle;
+        transition: all 0.3s ease;
+      }
+      footer {
+        margin-top: 2rem;
+        background: var(--dark);
+        color: var(--light);
+        text-align: center;
+        padding: 1rem;
+      }
+      .preview-box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background: #ccc;
+        max-width: 700px;
+        width: 100%;
+        z-index: 5;
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0px 0px 21px black;
+        padding: 0px 5px 5px 5px;
+        border-radius: 9px;
+      }
+      .preview-box.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+        transition: all 0.3s ease;
+      }
+      .preview-box .details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 22px 13px 10px;
+      }
+      .title {
+        display: flex;
+        font-size: 28px;
+        font-weight: 400;
+      }
+      .details.title p {
+        margin-left: 5px;
+        font-weight: 500;
+      }
+      .details .icon {
+        color: #333;
+        font-size: 22px;
+        cursor: pointer;
+      }
+      .preview-box .image-box {
+        display: flex;
+        width: 100%;
+      }
+      .image-box img {
+        width: 100%;
+        border-radius: 38px;
+        padding: 28px;
+      }
+      .shadow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        display: none;
+        background: rgba(0, 0, 0, 0.4);
+      }
+      .shadow.show {
+        display: block;
+      }
+      @media (max-width: 700px) {
+        .items {
+          max-width: 600px;
+        }
+        .item {
+          padding: 7px 15px;
+        }
+      }
+      @media (max-width: 600px) {
+        .items {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .item {
+          margin: 5px;
+        }
+        .images {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav>
+        <div class="items">
+          <span class="item active" data-name="all">All</span>
+          <span class="item" data-name="beg">Beg</span>
+          <span class="item" data-name="shoes">Shoes</span>
+          <span class="item" data-name="watches">Watches</span>
+          <span class="item" data-name="camera">Camera</span>
+          <span class="item" data-name="headphones">Headphones</span>
+        </div>
+      </nav>
+      <!--filter images-->
+      <div class="gallery">
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="watches">
+          <span
+            ><img src="watch design/watches-1.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="shoes">
+          <span
+            ><img src="watch design/shoes-1.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-2.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="watches">
+          <span
+            ><img src="watch design/watches-2.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="shoes">
+          <span
+            ><img src="watch design/shoes-2.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-3.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="watches">
+          <span
+            ><img src="watch design/watches-3.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="shoes">
+          <span
+            ><img src="watch design/shoes-3.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="camera">
+          <span
+            ><img src="watch design/camera-1.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="headphones">
+          <span
+            ><img src="watch design/headphones-1.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-5.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="watches">
+          <span
+            ><img src="watch design/watches-4.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-6.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="shoes">
+          <span
+            ><img src="watch design/shoes-4.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="camera">
+          <span
+            ><img src="watch design/camera-2.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-7.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="headphones">
+          <span
+            ><img src="watch design/headphones-2.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-8.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-9.jpg" alt="Error image loading"
+          /></span>
+        </div>
+        <div class="image" data-name="beg">
+          <span
+            ><img src="watch design/beg-10.jpg" alt="Error image loading"
+          /></span>
+        </div>
+      </div>
+      <!----footer----->
+      <footer>
+        <p>Asthana Buisness Model &copy; 2022</p>
+      </footer>
+    </div>
+    <!----full screen preview box-->
+    <div class="preview-box">
+      <div class="details">
+        <span class="title"
+          >Image Category:
+          <p>Not defined</p></span
+        >
+        <span class="icon fas fa-times"></span>
+      </div>
+      <div class="image-box">
+        <img src="watch design/beg.jpg" alt="Error image loading" />
+      </div>
+    </div>
+    <div class="shadow"></div>
+    <script>
+      const filterItem = document.querySelector(".items");
+      const filterImg = document.querySelectorAll(".image");
+      window.onload = () => {
+        filterItem.onclick = (selectedItem) => {
+          //when user click on the filteritem div
+          if (selectedItem.target.classList.contains("item")) {
+            //if user click on element has .item class
+            filterItem.querySelector(".active").classList.remove("active"); //remove the active class which is  in the first element
+            selectedItem.target.classList.add("active"); //add that active class on the element or item which is selcted by the user
+            let filterName = selectedItem.target.getAttribute("data-name"); //getting data-name value of the user selected item and storing in a filter variable
+            filterImg.forEach((image) => {
+              let filterImages = image.getAttribute("data-name"); //getting image data-name value
+              //if user selected item data-name value is equal to image-data name value
+              //or user selected item data-name value is equal to all
+              if (filterImages == filterName || filterName == "all") {
+                image.classList.remove("hide");
+                image.classList.add("show");
+              } else {
+                image.classList.add("hide");
+                image.classList.remove("show");
+              }
+            });
+          }
+        };
+        for (let index = 0; index < filterImg.length; index++) {
+          filterImg[index].setAttribute("onclick", "preview(this)"); //adding onclick attribute in all avialable images
+        }
+      };
+      //selecting all reqired elements
+      let previewBox = document.querySelector(".preview-box"),
+        previewImg = previewBox.querySelector("img"),
+        categoryName = previewBox.querySelector(".title p"),
+        closeIcon = previewBox.querySelector(".icon"),
+        shadow = document.querySelector(".shadow");
+      //fullscreen preview funtion
+      function preview(element) {
+        //once the user click on any image then remove the scrollbar of the body,so user can't scroll up or down
+        document.querySelector("body").style.overflow = "hidden";
+        let selectedPrevImg = element.querySelector("img").src; //getting user clicked image source link and store in a variable
+        let selectedImgCategory = element.getAttribute("data-name"); //getting user clicked data-name value
+        categoryName.textContent = selectedImgCategory; //passing the data-name value to the category name variable
+        previewImg.src = selectedPrevImg; //passing the user clicked image source in the preview image source
+        previewBox.classList.add("show"); //show the preview box
+        shadow.classList.add("show"); //show the light gey background
+        closeIcon.onclick = () => {
+          alert("ok");
+
+          //if user click on the close icon of the preview-box
+          previewBox.classList.hide("show"); //hide the preview box
+          shadow.classList.remove("show"); //hide the light gey background
+          document.querySelector("body").style.overflow = "scroll";
+        };
+      }
+    </script>
+  </body>
+</html>
